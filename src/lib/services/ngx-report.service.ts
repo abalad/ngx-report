@@ -55,7 +55,7 @@ export class NgxReportService {
   /**
    * Print Without Margin
    */
-  public borderless = false;
+  public marginless = false;
 
   /**
    * Default Header Configurations
@@ -153,8 +153,8 @@ export class NgxReportService {
       if (configuration.footer) {
         this.footer = configuration.footer;
       }
-      if (configuration.borderless) {
-        this.borderless = configuration.borderless;
+      if (configuration.marginless) {
+        this.marginless = configuration.marginless;
       }
     }
   }
@@ -174,7 +174,7 @@ export class NgxReportService {
       margin: this.margin,
       header: this.header,
       footer: this.footer,
-      borderless: this.borderless,
+      marginless: this.marginless,
     };
   }
 
@@ -292,10 +292,10 @@ export class NgxReportService {
               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
               <style>
               @page {
-                margin-top: ${!configuration.borderless ? configuration.margin.top : '0mm'};
-                margin-right: ${!configuration.borderless ? configuration.margin.right : '0mm'};
-                margin-bottom: ${!configuration.borderless ? configuration.margin.bottom : '0mm'};
-                margin-left: ${!configuration.borderless ? configuration.margin.left : '0mm'};
+                margin-top: ${!configuration.marginless ? configuration.margin.top : '0mm'};
+                margin-right: ${!configuration.marginless ? configuration.margin.right : '0mm'};
+                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '0mm'};
+                margin-left: ${!configuration.marginless ? configuration.margin.left : '0mm'};
                 size: A4;
                 page-break-before: always;
               }

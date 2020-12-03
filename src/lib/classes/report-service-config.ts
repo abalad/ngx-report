@@ -33,6 +33,6 @@ export class ReportServiceConfig {
   footer ? = { height: '30mm' };
 
   /* Print Without Margin */
-  borderless ? = false;
+  marginless ? = false;
 }
 
