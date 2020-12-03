@@ -5,6 +5,7 @@ import { NgxReportBodyComponent } from './components/ngx-report-body/ngx-report-
 import { NgxReportFooterComponent } from './components/ngx-report-footer/ngx-report-footer.component';
 import { NgxReportHeaderComponent } from './components/ngx-report-header/ngx-report-header.component';
 import { NgxReportComponent } from './components/ngx-report/ngx-report.component';
+import { NgxReportBaseComponent } from './components/ngx-report-base/ngx-report-base.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NgxReportComponent } from './components/ngx-report/ngx-report.component
     NgxReportComponent,
     NgxReportBodyComponent,
     NgxReportFooterComponent,
-    NgxReportHeaderComponent
+    NgxReportHeaderComponent,
+    NgxReportBaseComponent
   ],
   exports: [
     NgxReportComponent,

@@ -5,7 +5,6 @@ import {
   Injector, Optional,
   Type,
 } from '@angular/core';
-import { PageConfig } from '../classes/page-config.class';
 import { ReportServiceConfig } from '../classes/report-service-config';
 
 @Injectable({
@@ -23,7 +22,7 @@ export class NgxReportService {
    * Wait time to render before open print dialog in ms
    * Default is 200
    */
-  public timeToRender = 500;
+  public timeToWaitRender = 500;
 
   /**
    * Open new window to print or not
@@ -38,6 +37,22 @@ export class NgxReportService {
   public appRootName = 'app-root';
 
   /**
+   * Page Configuration
+   * Default is PageConfig
+   */
+  public margin = { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' };
+
+  /**
+   * Default Title of Window
+   */
+  public title = 'NGXS REPORT';
+
+  /**
+   * Print Without Margin
+   */
+  public borderless = false;
+
+  /**
    * Class used in component when printing to current window
    */
   renderClass = 'default';
@@ -50,51 +65,93 @@ export class NgxReportService {
 
   eventadded = [];
 
-  constructor( @Optional() config: ReportServiceConfig, private resolver: ComponentFactoryResolver, private injector: Injector, private appRef: ApplicationRef ) {
-    this.setRootConfigOptions(config);
+  constructor(
+    @Optional() config: ReportServiceConfig,
+    private resolver: ComponentFactoryResolver,
+    private injector: Injector,
+    private appRef: ApplicationRef ) {
+      this.setRootConfigOptions(config);
   }
 
   /**
-   * Set config from forRoot
-   * @param config
-   */
-  private setRootConfigOptions(config: ReportServiceConfig): void {
-    if (config) {
-      if (config.printOpenWindow) {
-        this.printOpenWindow = config.printOpenWindow;
-      }
-      if (config.timeToWaitRender) {
-        this.timeToRender = config.timeToWaitRender;
-      }
-      if (config.renderClass) {
-        this.renderClass = config.renderClass;
-      }
-      if (config.appRootName) {
-        this.appRootName = config.appRootName;
-      }
-      if (config.printPreviewOnly) {
-        this.printPreviewOnly = config.printPreviewOnly;
-      }
-    }
-  }
-  /**
-   * Print Angular TemplateRef or a Component or String
+   * Print Angular Component
    * @example
-   * this.printerService.printComponent(this.PrintTemplateTpl);
+   * this.printerService.printComponent(MyComponentPage);
    * @param component
    * @param properties
    * @param configuration
    */
-  printComponent(component: Type<any>, properties, configuration = new PageConfig() ) {
-    const componentRef = this.createComponent(component, properties);
+  printComponent(component: Type<any>, properties, configuration = this.getDefaultConfiguration() ) {
+    const componentRef = this.createComponent(component, properties, configuration);
     this.print(componentRef.location.nativeElement, this.printOpenWindow, configuration);
   }
+
+  /**
+   * Load Page Default Configuration
+   * @example
+   * this.printerService.loadPageConfiguration( {margin: { top: '0mm'} });
+   * @param configuration
+   */
+  loadDefaultConfiguration(configuration: ReportServiceConfig) {
+    this.setRootConfigOptions(configuration);
+  }
+
+  /**
+   * Set config from forRoot
+   * @param configuration
+   */
+  private setRootConfigOptions(configuration: ReportServiceConfig): void {
+    if (configuration) {
+      if (configuration.printOpenWindow) {
+        this.printOpenWindow = configuration.printOpenWindow;
+      }
+      if (configuration.timeToWaitRender) {
+        this.timeToWaitRender = configuration.timeToWaitRender;
+      }
+      if (configuration.renderClass) {
+        this.renderClass = configuration.renderClass;
+      }
+      if (configuration.appRootName) {
+        this.appRootName = configuration.appRootName;
+      }
+      if (configuration.printPreviewOnly) {
+        this.printPreviewOnly = configuration.printPreviewOnly;
+      }
+      if (configuration.title) {
+        this.title = configuration.title;
+      }
+      if (configuration.margin) {
+        this.margin = configuration.margin;
+      }
+      if (configuration.borderless) {
+        this.borderless = configuration.borderless;
+      }
+    }
+  }
+
+  /**
+   * Get config to configuration
+   */
+  private getDefaultConfiguration(): ReportServiceConfig {
+    return {
+      printOpenWindow: this.printOpenWindow,
+      timeToWaitRender: this.timeToWaitRender,
+      renderClass: this.renderClass,
+      appRootName: this.appRootName,
+      printPreviewOnly: this.printPreviewOnly,
+      title: this.title,
+      margin: this.margin,
+      borderless: this.borderless,
+    };
+  }
+
   /**
    * Main print function
    * @param printContent
    * @param printOpenWindow
+   * @param configuration
    */
-  private print(printContent: any, printOpenWindow: boolean, configuration): void {
+  private print(printContent: any, printOpenWindow: boolean, configuration: ReportServiceConfig): void {
     if (printOpenWindow === true) {
       this.printInNewWindow(printContent, configuration);
     }
@@ -115,8 +172,9 @@ export class NgxReportService {
   /**
    * Print using a new window / tab
    * @param content
+   * @param configuration
    */
-  private printInNewWindow(content: HTMLElement, configuration): void {
+  private printInNewWindow(content: HTMLElement, configuration: ReportServiceConfig): void {
     this.window = null;
     this.window = window.open('', 'target', 'toolbar=0,height=600,width=1024');
     this.window.document.write( this.getBodyContent( configuration ) );
@@ -128,7 +186,7 @@ export class NgxReportService {
     this.window.document.close();
     setTimeout(
       () => this.printTabWindow(this.window, this.window.document),
-      this.timeToRender
+      this.timeToWaitRender
     );
   }
 
@@ -142,7 +200,7 @@ export class NgxReportService {
     this.registerPrintEvent(printWindow, true);
     printWindow.focus();
     if (printWindowDoc.execCommand('print') === false) {
-     // printWindow.print();
+      printWindow.print();
     }
   }
 
@@ -168,35 +226,35 @@ export class NgxReportService {
    */
   private cleanUp(printWindow: Window, printOpenWindow: boolean): void {
     if (printOpenWindow === true) {
-    //  printWindow.close();
+      printWindow.close();
       setTimeout(() => {
-      //  printWindow.close();
+        printWindow.close();
       }, 20);
     }
   }
 
-  private createComponent( component, properties ) {
+  private createComponent( component, properties, configuration ) {
     const factory = this.resolver.resolveComponentFactory( component );
     const componentRef = factory.create(this.injector);
     this.appRef.attachView(componentRef.hostView);
     componentRef.instance['properties'] = properties;
+    componentRef.instance['configuration'] = configuration;
     return componentRef;
   }
 
-
-  private getBodyContent( configuration ) {
+  private getBodyContent( configuration: ReportServiceConfig ) {
     return `<html lang="pt">
               <head>
               <meta charset="utf-8">
-              <title>NGX REPORT</title>
+              <title>${configuration.title}</title>
                <!-- Normalize or reset CSS with your favorite library -->
               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
               <style>
               @page {
-                margin-top: ${configuration.margin.top};
-                margin-right: ${configuration.margin.right};
-                margin-bottom: ${configuration.margin.bottom};
-                margin-left: ${configuration.margin.left};
+                margin-top: ${!configuration.borderless ? configuration.margin.top : '0mm'};
+                margin-right: ${!configuration.borderless ? configuration.margin.right : '0mm'};
+                margin-bottom: ${!configuration.borderless ? configuration.margin.bottom : '0mm'};
+                margin-left: ${!configuration.borderless ? configuration.margin.left : '0mm'};
                 size: A4;
                 page-break-before: always;
               }

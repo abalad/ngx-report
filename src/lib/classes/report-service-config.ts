@@ -9,11 +9,21 @@ export class ReportServiceConfig {
   timeToWaitRender ? = 200;
 
   /** Class name to be used when printing in current window */
-  renderClass?: string;
+  renderClass ?: string;
 
   /* Name ofapp route component - usally 'app-root' used by print to same window */
   appRootName ?  = 'app-root';
 
   /* Just show preview without fireing the print command - default is false */
   printPreviewOnly ? = false;
+
+  /* Default Title to Window */
+  title ? = 'NGXS REPORT';
+
+  /* Margin Default of Page */
+  margin ? = { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' };
+
+  /* Print Without Margin */
+  borderless ? = false;
 }
+
