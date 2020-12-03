@@ -2,6 +2,9 @@
  * Config for service - used in forRoot
  */
 export class ReportServiceConfig {
+  /** Active/Desactive Debug Mode */
+  debug ? = false;
+
   /** Print in a new window or not */
   printOpenWindow ? = true;
 
@@ -22,6 +25,12 @@ export class ReportServiceConfig {
 
   /* Margin Default of Page */
   margin ? = { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' };
+
+  /* Default Header Configurations */
+  header ? = { height: '30mm' };
+
+  /* Default Footer Configurations */
+  footer ? = { height: '30mm' };
 
   /* Print Without Margin */
   borderless ? = false;

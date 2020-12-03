@@ -11,6 +11,11 @@ import { ReportServiceConfig } from '../classes/report-service-config';
   providedIn: 'root'
 })
 export class NgxReportService {
+  /**
+   * Active or Desactive Debug Mode
+   * Default is false
+   */
+  public debug = false;
 
   /**
    * Do not fire print event - just show preview
@@ -51,6 +56,16 @@ export class NgxReportService {
    * Print Without Margin
    */
   public borderless = false;
+
+  /**
+   * Default Header Configurations
+   */
+  public header = { height: '30mm' };
+
+  /**
+   * Default Footer Configurations
+   */
+  public footer = { height: '30mm' };
 
   /**
    * Class used in component when printing to current window
@@ -108,6 +123,9 @@ export class NgxReportService {
    */
   private setRootConfigOptions(configuration: ReportServiceConfig): void {
     if (configuration) {
+      if (configuration.debug) {
+        this.debug = configuration.debug;
+      }
       if (configuration.printOpenWindow) {
         this.printOpenWindow = configuration.printOpenWindow;
       }
@@ -129,6 +147,12 @@ export class NgxReportService {
       if (configuration.margin) {
         this.margin = configuration.margin;
       }
+      if (configuration.header) {
+        this.header = configuration.header;
+      }
+      if (configuration.footer) {
+        this.footer = configuration.footer;
+      }
       if (configuration.borderless) {
         this.borderless = configuration.borderless;
       }
@@ -140,6 +164,7 @@ export class NgxReportService {
    */
   private getDefaultConfiguration(): ReportServiceConfig {
     return {
+      debug: this.debug,
       printOpenWindow: this.printOpenWindow,
       timeToWaitRender: this.timeToWaitRender,
       renderClass: this.renderClass,
@@ -147,6 +172,8 @@ export class NgxReportService {
       printPreviewOnly: this.printPreviewOnly,
       title: this.title,
       margin: this.margin,
+      header: this.header,
+      footer: this.footer,
       borderless: this.borderless,
     };
   }
@@ -206,7 +233,7 @@ export class NgxReportService {
     this.registerPrintEvent(printWindow, true);
     printWindow.focus();
     if (printWindowDoc.execCommand('print') === false) {
-      //printWindow.print();
+      printWindow.print();
     }
   }
 
@@ -231,10 +258,10 @@ export class NgxReportService {
    * @internal
    */
   private cleanUp(printWindow: Window, printOpenWindow: boolean): void {
-    if (printOpenWindow === true) {
-    //  printWindow.close();
+    if (printOpenWindow === true && !this.debug) {
+      printWindow.close();
       setTimeout(() => {
-      //  printWindow.close();
+        printWindow.close();
       }, 20);
     }
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxReportService } from '../../services/ngx-report.service';
 
 @Component({
   selector: 'ngx-report-header',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NgxReportHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor( public ngxReportService: NgxReportService ) { }
 
   ngOnInit(): void {
   }

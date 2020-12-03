@@ -15,5 +15,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff0f5;
+}
+
+.debug{
+  border: 2px solid hsl(0deg 100% 50%);
+  box-sizing: border-box;
+  background: #cfcfcf;
 }

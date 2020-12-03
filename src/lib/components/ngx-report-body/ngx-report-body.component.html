@@ -1,7 +1,9 @@
 <tbody class="ngx-dc-report-content">
   <tr>
     <td style="padding: 0;">
-      <div style="height: 197mm" class="-body-content">
+      <div [style]="{
+             height: 'calc( 296mm - ' + ngxReportService.header.height + ' - ' + ngxReportService.footer.height + ')'
+            }" class="-body-content" [ngClass]="{debug: ngxReportService.debug}">
         <ng-content></ng-content>
       </div>
     </td>

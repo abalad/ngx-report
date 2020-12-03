@@ -8,7 +8,7 @@ import { NgxReportService } from '../../services/ngx-report.service';
 })
 export class NgxReportBodyComponent implements OnInit {
 
-  constructor( private ngxService: NgxReportService ) { }
+  constructor( public ngxReportService: NgxReportService ) { }
 
   ngOnInit(): void {
   }
