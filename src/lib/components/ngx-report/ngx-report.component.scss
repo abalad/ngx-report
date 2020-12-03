@@ -18,4 +18,9 @@ table thead, table tbody tr {
   width: 100%;
   table-layout: fixed;
 }
+@media print {
+  .-no-margin{
+    margin: 0 !important;
+  }
+}
 

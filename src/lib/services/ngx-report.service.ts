@@ -65,6 +65,8 @@ export class NgxReportService {
 
   eventadded = [];
 
+  freezedConfiguration: ReportServiceConfig;
+
   constructor(
     @Optional() config: ReportServiceConfig,
     private resolver: ComponentFactoryResolver,
@@ -82,9 +84,12 @@ export class NgxReportService {
    * @param configuration
    */
   printComponent(component: Type<any>, properties, configuration = this.getDefaultConfiguration() ) {
-    configuration = Object.assign(this.getDefaultConfiguration(), configuration);
+    this.freezeConfiguration();
+    this.setRootConfigOptions(configuration);
+    configuration = this.getDefaultConfiguration();
     const componentRef = this.createComponent(component, properties, configuration);
     this.print(componentRef.location.nativeElement, this.printOpenWindow, configuration);
+    this.unFreezeConfiguration();
   }
 
   /**
@@ -201,7 +206,7 @@ export class NgxReportService {
     this.registerPrintEvent(printWindow, true);
     printWindow.focus();
     if (printWindowDoc.execCommand('print') === false) {
-      printWindow.print();
+      //printWindow.print();
     }
   }
 
@@ -227,9 +232,9 @@ export class NgxReportService {
    */
   private cleanUp(printWindow: Window, printOpenWindow: boolean): void {
     if (printOpenWindow === true) {
-      printWindow.close();
+    //  printWindow.close();
       setTimeout(() => {
-        printWindow.close();
+      //  printWindow.close();
       }, 20);
     }
   }
@@ -241,6 +246,14 @@ export class NgxReportService {
     componentRef.instance['properties'] = properties;
     componentRef.instance['configuration'] = configuration;
     return componentRef;
+  }
+
+  private freezeConfiguration() {
+    this.freezedConfiguration = this.getDefaultConfiguration();
+  }
+
+  private unFreezeConfiguration() {
+    this.setRootConfigOptions( this.freezedConfiguration );
   }
 
   private getBodyContent( configuration: ReportServiceConfig ) {

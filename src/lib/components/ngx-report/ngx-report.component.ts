@@ -1,19 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgxReportService } from '../../services/ngx-report.service';
-import { ReportServiceConfig } from '../../classes/report-service-config';
 
 @Component({
   selector: 'ngx-report',
   templateUrl: './ngx-report.component.html',
   styleUrls: ['./ngx-report.component.scss']
 })
-export class NgxReportComponent implements OnInit {
+export class NgxReportComponent {
 
-  margin = new ReportServiceConfig().margin;
+  margin: any;
 
-  constructor( private ngxService: NgxReportService ) { }
-
-  ngOnInit(): void {
+  constructor( private ngxService: NgxReportService ) {
     this.margin = this.ngxService.margin;
   }
 
