@@ -1,0 +1,23 @@
+:host{
+  /* autoprefixer: ignore next */
+  display: contents;
+}
+
+.-body-content{
+  overflow: auto;
+}
+
+.ngx-dc-report-content{
+  >tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+@media print {
+  .-body-content{
+    height: unset !important;
+    overflow: unset!important;
+  }
+}

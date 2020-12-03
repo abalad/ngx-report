@@ -1,0 +1,19 @@
+:host{
+  /* autoprefixer: ignore next */
+  display: contents;
+}
+
+.ngx-dc-report-header{
+  display:table-header-group;
+  >tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+.-header-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff0f5;
+}

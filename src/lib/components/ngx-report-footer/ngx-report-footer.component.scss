@@ -1,0 +1,15 @@
+:host{
+  /* autoprefixer: ignore next */
+  display: contents;
+}
+
+.ngx-dc-report-footer{
+  display:table-footer-group;
+}
+
+.-footer-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff0f5;
+}

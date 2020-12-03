@@ -1,0 +1,22 @@
+{
+  "name": "ngx-report",
+  "version": "1.1.0",
+  "peerDependencies": {
+    "@angular/common": "^10.0.6",
+    "@angular/core": "^10.0.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "description": "A library for creating pages that can be printed with a footer, body and header",
+  "keywords": [
+    "angular",
+    "report",
+    "angular10",
+    "ivy",
+    "print",
+    "printer"
+  ],
+  "author": "Maicon Wagner",
+  "license": "MIT"
+}

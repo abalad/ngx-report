@@ -1,0 +1,21 @@
+.ngx-dc-report-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-flow: column;
+  background: white;
+  font-size: 14px;
+}
+
+.ngx-dc-report-container {
+  border-collapse: collapse;
+  border-spacing: 0;
+  page-break-after:always;
+  width: 100%;
+}
+table thead, table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
