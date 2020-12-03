@@ -1,6 +1,6 @@
 {
   "name": "ngx-report",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "peerDependencies": {
     "@angular/common": "^10.0.6",
     "@angular/core": "^10.0.6"
@@ -18,5 +18,7 @@
     "printer"
   ],
   "author": "Maicon Wagner",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/abalad/ngx-report/blob/main/README.md",
+  "repository": "https://github.com/abalad/ngx-report.git"
 }
