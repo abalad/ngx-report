@@ -82,6 +82,7 @@ export class NgxReportService {
    * @param configuration
    */
   printComponent(component: Type<any>, properties, configuration = this.getDefaultConfiguration() ) {
+    configuration = Object.assign(this.getDefaultConfiguration(), configuration);
     const componentRef = this.createComponent(component, properties, configuration);
     this.print(componentRef.location.nativeElement, this.printOpenWindow, configuration);
   }

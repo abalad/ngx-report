@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxReportService } from '../../services/ngx-report.service';
+import { ReportServiceConfig } from '../../classes/report-service-config';
 
 @Component({
   selector: 'ngx-report',
@@ -7,9 +9,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NgxReportComponent implements OnInit {
 
-  constructor() { }
+  margin = new ReportServiceConfig().margin;
+
+  constructor( private ngxService: NgxReportService ) { }
 
   ngOnInit(): void {
+    this.margin = this.ngxService.margin;
   }
 
 }
