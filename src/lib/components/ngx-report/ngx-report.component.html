@@ -1,6 +1,6 @@
 <div class="ngx-dc-report-wrapper">
   <table class="ngx-dc-report-container">
-    <div class="-no-margin" [style]="{marginTop: margin.top, marginRight: margin.right, marginBottom: margin.bottom, marginLeft: margin.left}">
+    <div [ngClass]="{'-marginless': marginless}" class="-no-margin" [style]="{marginTop: margin.top, marginRight: margin.right, marginBottom: margin.bottom, marginLeft: margin.left}">
       <ng-content></ng-content>
     </div>
   </table>

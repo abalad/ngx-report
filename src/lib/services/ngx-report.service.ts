@@ -123,37 +123,37 @@ export class NgxReportService {
    */
   private setRootConfigOptions(configuration: ReportServiceConfig): void {
     if (configuration) {
-      if (configuration.debug) {
+      if (configuration.hasOwnProperty('debug')) {
         this.debug = configuration.debug;
       }
-      if (configuration.printOpenWindow) {
+      if (configuration.hasOwnProperty('printOpenWindow')) {
         this.printOpenWindow = configuration.printOpenWindow;
       }
-      if (configuration.timeToWaitRender) {
+      if (configuration.hasOwnProperty('timeToWaitRender')) {
         this.timeToWaitRender = configuration.timeToWaitRender;
       }
-      if (configuration.renderClass) {
+      if (configuration.hasOwnProperty('renderClass')) {
         this.renderClass = configuration.renderClass;
       }
-      if (configuration.appRootName) {
+      if (configuration.hasOwnProperty('appRootName')) {
         this.appRootName = configuration.appRootName;
       }
-      if (configuration.printPreviewOnly) {
+      if (configuration.hasOwnProperty('printPreviewOnly')) {
         this.printPreviewOnly = configuration.printPreviewOnly;
       }
-      if (configuration.title) {
+      if (configuration.hasOwnProperty('title')) {
         this.title = configuration.title;
       }
-      if (configuration.margin) {
+      if (configuration.hasOwnProperty('margin')) {
         this.margin = configuration.margin;
       }
-      if (configuration.header) {
+      if (configuration.hasOwnProperty('header')) {
         this.header = configuration.header;
       }
-      if (configuration.footer) {
+      if (configuration.hasOwnProperty('footer')) {
         this.footer = configuration.footer;
       }
-      if (configuration.marginless) {
+      if (configuration.hasOwnProperty('marginless')) {
         this.marginless = configuration.marginless;
       }
     }

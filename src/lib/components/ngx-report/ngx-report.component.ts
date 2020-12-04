@@ -10,8 +10,11 @@ export class NgxReportComponent {
 
   margin: any;
 
+  marginless: any;
+
   constructor( private ngxService: NgxReportService ) {
     this.margin = this.ngxService.margin;
+    this.marginless = this.ngxService.marginless;
   }
 
 }
