@@ -1,0 +1,19 @@
+<div class="ms-print-preview-container">
+  <div class="ms-page"
+       [style.paddingTop]="margin.top"
+       [style.paddingRight]="margin.right"
+       [style.paddingBottom]="margin.bottom"
+       [style.paddingLeft]="margin.left">
+    <div class="ngx-preview-header" [style]="{height: headerHeight}">
+      {{headerContent}}
+    </div>
+    <div class="ngx-preview-body"
+         [style.height]="'calc( 296mm - ' + headerHeight + ' - ' +  margin.top + ' - ' +  margin.bottom + ' - ' +  footerHeight + ')'"
+    >
+      {{content}}
+    </div>
+    <div class="ngx-preview-footer" [style]="{height: footerHeight}">
+      {{footerContent}}
+    </div>
+  </div>
+</div>

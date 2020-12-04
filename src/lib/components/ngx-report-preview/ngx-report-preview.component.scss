@@ -1,0 +1,48 @@
+.ms-print-preview-container {
+  height: 630px;
+  /* width: 466px; */
+  background-color: hsl(0deg 4% 89%);
+  margin: 0;
+  padding: 20px;
+  overflow: hidden;
+  /* position: absolute; */
+  box-sizing: content-box;
+}
+
+.ms-page{
+  border: 1px solid hsl(0deg 0% 89%);
+  background: hsl(0deg 0% 100%);
+  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
+  width: 210mm;
+  height: 296mm;
+  position: relative;
+  transform: scale(0.561);
+  transform-origin: top center;
+  overflow: hidden;
+  transform-box: fill-box;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.ngx-preview-header{
+  background: hsl(0deg 0% 94%);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed hsl(208deg 70% 51%);
+}
+.ngx-preview-body{
+  background: hsl(0deg 0% 100%);
+  border-right: 1px dashed hsl(208deg 70% 51%);
+  border-left: 1px dashed hsl(208deg 70% 51%);
+}
+.ngx-preview-footer{
+  background: hsl(0deg 0% 94%);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed hsl(208deg 70% 51%);
+
+}

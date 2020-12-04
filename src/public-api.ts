@@ -8,5 +8,6 @@ export { NgxReportBaseComponent } from './lib/components/ngx-report-base/ngx-rep
 export { NgxReportBodyComponent } from './lib/components/ngx-report-body/ngx-report-body.component';
 export { NgxReportHeaderComponent } from './lib/components/ngx-report-header/ngx-report-header.component';
 export { NgxReportFooterComponent } from './lib/components/ngx-report-footer/ngx-report-footer.component';
+export { NgxReportPreviewComponent } from './lib/components/ngx-report-preview/ngx-report-preview.component';
 export { NgxReportService } from './lib/services/ngx-report.service';
 
