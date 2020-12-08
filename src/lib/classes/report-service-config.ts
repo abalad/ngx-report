@@ -23,6 +23,9 @@ export class ReportServiceConfig {
   /* Default Title to Window */
   title ? = 'NGXS REPORT';
 
+  /* Default Orientation Configurations */
+  orientation ?: 'portrait' | 'landscape' = 'portrait';
+
   /* Margin Default of Page */
   margin ? = { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' };
 

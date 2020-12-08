@@ -68,6 +68,11 @@ export class NgxReportService {
   public footer = { height: '30mm' };
 
   /**
+   * Default Orientation Configurations
+   */
+  public orientation: 'portrait' | 'landscape' = 'portrait';
+
+  /**
    * Class used in component when printing to current window
    */
   renderClass = 'default';
@@ -153,6 +158,9 @@ export class NgxReportService {
       if (configuration.hasOwnProperty('footer')) {
         this.footer = configuration.footer;
       }
+      if (configuration.hasOwnProperty('orientation')) {
+        this.orientation = configuration.orientation;
+      }
       if (configuration.hasOwnProperty('marginless')) {
         this.marginless = configuration.marginless;
       }
@@ -174,6 +182,7 @@ export class NgxReportService {
       margin: this.margin,
       header: this.header,
       footer: this.footer,
+      orientation: this.orientation,
       marginless: this.marginless,
     };
   }
@@ -296,10 +305,10 @@ export class NgxReportService {
                 margin-right: ${!configuration.marginless ? configuration.margin.right : '0mm'};
                 margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '0mm'};
                 margin-left: ${!configuration.marginless ? configuration.margin.left : '0mm'};
-                size: A4;
+                size: A4 ${configuration.orientation};
                 page-break-before: always;
               }
-              body { margin: 0; background: #e0e0e0 !important; }
+              body { margin: 0; background: #e0e0e0 !important;  }
               .sheet {
                 margin: 0;
                 overflow: hidden;
@@ -311,7 +320,7 @@ export class NgxReportService {
               /** Paper sizes **/
               body.A3               .sheet { width: 297mm; height: 419mm }
               body.A3.landscape     .sheet { width: 420mm; height: 296mm }
-              body.A4               .sheet { width: 210mm; height: 296mm }
+              body.A4.portrait      .sheet { width: 210mm; height: 296mm }
               body.A4.landscape     .sheet { width: 297mm; height: 209mm }
               body.A5               .sheet { width: 148mm; height: 209mm }
               body.A5.landscape     .sheet { width: 210mm; height: 147mm }
@@ -338,20 +347,20 @@ export class NgxReportService {
 
               /** Fix for Chrome issue #273306 **/
               @media print {
-                         body.A3.landscape { width: 420mm }
-                body.A3, body.A4.landscape { width: 297mm }
-                body.A4, body.A5.landscape { width: 210mm }
-                body.A5                    { width: 148mm }
-                body.letter, body.legal    { width: 216mm }
-                body.letter.landscape      { width: 280mm }
-                body.legal.landscape       { width: 357mm }
+                body.A3.landscape                   { width: 420mm }
+                body.A3, body.A4.landscape          { width: 297mm }
+                body.A4.portrait, body.A5.landscape { width: 210mm }
+                body.A5                             { width: 148mm }
+                body.letter, body.legal             { width: 216mm }
+                body.letter.landscape               { width: 280mm }
+                body.legal.landscape                { width: 357mm }
                 body{
                   background: #FFFFFF !important;
                 }
               }
               </style>
               </head>
-              <body class="A4">
+              <body class="A4 ${configuration.orientation}">
                 <section class="sheet" style="overflow: unset !important;"></section>
               </body>`;
   }
