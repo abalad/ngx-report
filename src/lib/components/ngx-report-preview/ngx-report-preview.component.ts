@@ -7,17 +7,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NgxReportPreviewComponent implements OnInit {
 
-  @Input() headerHeight = '5cm';
-
-  @Input() footerHeight = '5cm';
-
-  @Input() content = 'CONTENT WHERE';
-
-  @Input() headerContent = 'CONTENT WHERE';
-
-  @Input() footerContent = 'CONTENT WHERE';
+  @Input() preview = { height: '600px', width: '290px', scale: 0.361, position: 'top left' };
 
   @Input() margin = { top: '0cm', right: '0cm', bottom: '0cm', left: '0cm' };
+
+  @Input() header = { height: '5cm', content: 'CONTENT WHERE'};
+
+  @Input() footer = { height: '5cm', content: 'CONTENT WHERE'};
+
+  @Input() content = { content: 'CONTENT WHERE'};
 
   constructor() { }
 

@@ -1,19 +1,21 @@
-<div class="ms-print-preview-container">
+<div class="ms-print-preview-container" [style.height]="preview.height" [style.width]="preview.width">
   <div class="ms-page"
+       [style.transformOrigin]="preview.position"
+       [style.transform]="'scale(' + preview.scale +')'"
        [style.paddingTop]="margin.top"
        [style.paddingRight]="margin.right"
        [style.paddingBottom]="margin.bottom"
        [style.paddingLeft]="margin.left">
-    <div class="ngx-preview-header" [style]="{height: headerHeight}">
-      {{headerContent}}
+    <div class="ngx-preview-header" [style]="{height: header.height}">
+      {{header.content}}
     </div>
     <div class="ngx-preview-body"
-         [style.height]="'calc( 296mm - ' + headerHeight + ' - ' +  margin.top + ' - ' +  margin.bottom + ' - ' +  footerHeight + ')'"
+         [style.height]="'calc( 296mm - ' + header.height + ' - ' +  margin.top + ' - ' +  margin.bottom + ' - ' +  footer.height + ')'"
     >
       {{content}}
     </div>
-    <div class="ngx-preview-footer" [style]="{height: footerHeight}">
-      {{footerContent}}
+    <div class="ngx-preview-footer" [style]="{height: footer.height}">
+      {{footer.content}}
     </div>
   </div>
 </div>

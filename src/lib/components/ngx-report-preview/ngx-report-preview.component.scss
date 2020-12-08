@@ -1,11 +1,8 @@
 .ms-print-preview-container {
-  height: 630px;
-  /* width: 466px; */
   background-color: hsl(0deg 4% 89%);
   margin: 0;
   padding: 20px;
   overflow: hidden;
-  /* position: absolute; */
   box-sizing: content-box;
 }
 
@@ -16,8 +13,6 @@
   width: 210mm;
   height: 296mm;
   position: relative;
-  transform: scale(0.561);
-  transform-origin: top center;
   overflow: hidden;
   transform-box: fill-box;
   display: inline-block;
@@ -30,12 +25,12 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  border: 1px dashed hsl(208deg 70% 51%);
+  border: 2px dashed hsl(208deg 70% 51%);
 }
 .ngx-preview-body{
   background: hsl(0deg 0% 100%);
-  border-right: 1px dashed hsl(208deg 70% 51%);
-  border-left: 1px dashed hsl(208deg 70% 51%);
+  border-right: 2px dashed hsl(208deg 70% 51%);
+  border-left: 2px dashed hsl(208deg 70% 51%);
 }
 .ngx-preview-footer{
   background: hsl(0deg 0% 94%);
@@ -43,6 +38,5 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  border: 1px dashed hsl(208deg 70% 51%);
-
+  border: 2px dashed hsl(208deg 70% 51%);
 }
