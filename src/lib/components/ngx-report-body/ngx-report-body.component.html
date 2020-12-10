@@ -3,10 +3,10 @@
     <td style="padding: 0;">
       <div [style]="{
              height: 'calc( 296mm - ' + ngxReportService.header.height + ' - ' + ngxReportService.footer.height + ')',
-             paddingTop: ngxReportService.body.padding.top,
-             paddingRight: ngxReportService.body.padding.right,
-             paddingBottom: ngxReportService.body.padding.bottom,
-             paddingLeft: ngxReportService.body.padding.left
+             paddingTop: padding.top,
+             paddingRight: padding.right,
+             paddingBottom: padding.bottom,
+             paddingLeft: padding.left
             }" class="-body-content" [ngClass]="{debug: ngxReportService.debug}">
         <ng-content></ng-content>
       </div>

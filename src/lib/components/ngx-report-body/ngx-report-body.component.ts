@@ -8,7 +8,11 @@ import { NgxReportService } from '../../services/ngx-report.service';
 })
 export class NgxReportBodyComponent implements OnInit {
 
-  constructor( public ngxReportService: NgxReportService ) { }
+  public padding: any;
+
+  constructor( public ngxReportService: NgxReportService ) {
+    this.padding = this.ngxReportService.body.padding;
+  }
 
   ngOnInit(): void {
   }
