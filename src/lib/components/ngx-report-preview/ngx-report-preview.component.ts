@@ -15,7 +15,7 @@ export class NgxReportPreviewComponent implements OnInit {
 
   @Input() footer = { height: '5cm', content: 'CONTENT WHERE'};
 
-  @Input() content = { content: 'CONTENT WHERE'};
+  @Input() content = { content: 'CONTENT WHERE', padding: { top: '0cm', right: '0cm', bottom: '0cm', left: '0cm' }};
 
   constructor() { }
 

@@ -21,7 +21,7 @@ export class ReportServiceConfig {
   printPreviewOnly ? = false;
 
   /* Default Title to Window */
-  title ? = 'NGXS REPORT';
+  title ? = 'NGX REPORT';
 
   /* Default Orientation Configurations */
   orientation ?: 'portrait' | 'landscape' = 'portrait';
@@ -34,6 +34,9 @@ export class ReportServiceConfig {
 
   /* Default Footer Configurations */
   footer ? = { height: '30mm' };
+
+  /* Content Default Properties */
+  body ? = { padding: {top: '0mm', right: '0mm', bottom: '0mm', left: '0mm'} };
 
   /* Print Without Margin */
   marginless ? = false;

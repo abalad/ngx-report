@@ -50,7 +50,7 @@ export class NgxReportService {
   /**
    * Default Title of Window
    */
-  public title = 'NGXS REPORT';
+  public title = 'NGX REPORT';
 
   /**
    * Print Without Margin
@@ -66,6 +66,9 @@ export class NgxReportService {
    * Default Footer Configurations
    */
   public footer = { height: '30mm' };
+
+  /* Content Default Properties */
+  public body = { padding: {top: '0mm', right: '0mm', bottom: '0mm', left: '0mm'} };
 
   /**
    * Default Orientation Configurations
@@ -158,6 +161,9 @@ export class NgxReportService {
       if (configuration.hasOwnProperty('footer')) {
         this.footer = configuration.footer;
       }
+      if (configuration.hasOwnProperty('body')) {
+        this.body = configuration.body;
+      }
       if (configuration.hasOwnProperty('orientation')) {
         this.orientation = configuration.orientation;
       }
@@ -182,6 +188,7 @@ export class NgxReportService {
       margin: this.margin,
       header: this.header,
       footer: this.footer,
+      body: this.body,
       orientation: this.orientation,
       marginless: this.marginless,
     };
@@ -300,15 +307,15 @@ export class NgxReportService {
                <!-- Normalize or reset CSS with your favorite library -->
               <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
               <style>
-              @page {
-                margin-top: ${!configuration.marginless ? configuration.margin.top : '0mm'};
-                margin-right: ${!configuration.marginless ? configuration.margin.right : '0mm'};
-                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '0mm'};
-                margin-left: ${!configuration.marginless ? configuration.margin.left : '0mm'};
-                size: A4 ${configuration.orientation};
-                page-break-before: always;
+              .toolbar{
+                background-color: #FFF;
+                box-shadow: 0 0.5mm 2mm rgba(0,0,0,.3);
+                position: fixed;
+                top: 0;
+                height: 75px;
+                width: 100%;
+                z-index: 1;
               }
-              body { margin: 0; background: #e0e0e0 !important;  }
               .sheet {
                 margin: 0;
                 overflow: hidden;
@@ -317,23 +324,21 @@ export class NgxReportService {
                 page-break-after: always;
               }
 
-              /** Paper sizes **/
-              body.A3               .sheet { width: 297mm; height: 419mm }
-              body.A3.landscape     .sheet { width: 420mm; height: 296mm }
-              body.A4.portrait      .sheet { width: 210mm; height: 296mm }
-              body.A4.landscape     .sheet { width: 297mm; height: 209mm }
-              body.A5               .sheet { width: 148mm; height: 209mm }
-              body.A5.landscape     .sheet { width: 210mm; height: 147mm }
-              body.letter           .sheet { width: 216mm; height: 279mm }
-              body.letter.landscape .sheet { width: 280mm; height: 215mm }
-              body.legal            .sheet { width: 216mm; height: 356mm }
-              body.legal.landscape  .sheet { width: 357mm; height: 215mm }
+              /** Body sizes **/
+              body { margin: 0; background: #e0e0e0 !important;  }
+              body.A4.portrait .sheet { width: 210mm; height: 296mm }
+              body.A4.landscape .sheet { width: 297mm; height: 209mm }
 
-              /** Padding area **/
-              .sheet.padding-10mm { padding: 10mm }
-              .sheet.padding-15mm { padding: 15mm }
-              .sheet.padding-20mm { padding: 20mm }
-              .sheet.padding-25mm { padding: 25mm }
+              /** For print **/
+              @page {
+                margin-top: ${!configuration.marginless ? configuration.margin.top : '0mm'};
+                margin-right: ${!configuration.marginless ? configuration.margin.right : '0mm'};
+                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '0mm'};
+                margin-left: ${!configuration.marginless ? configuration.margin.left : '0mm'};
+                size: A4 ${configuration.orientation};
+                page-break-before: always;
+
+              }
 
               /** For screen preview **/
               @media screen {
@@ -342,26 +347,31 @@ export class NgxReportService {
                   background: white;
                   box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
                   margin: 5mm auto;
+                  /*margin-top: 100px;*/
                 }
               }
 
               /** Fix for Chrome issue #273306 **/
               @media print {
-                body.A3.landscape                   { width: 420mm }
-                body.A3, body.A4.landscape          { width: 297mm }
-                body.A4.portrait, body.A5.landscape { width: 210mm }
-                body.A5                             { width: 148mm }
-                body.letter, body.legal             { width: 216mm }
-                body.letter.landscape               { width: 280mm }
-                body.legal.landscape                { width: 357mm }
+                body.A4.landscape { width: 297mm }
+                body.A4.portrait { width: 210mm }
                 body{
                   background: #FFFFFF !important;
+                }
+                .toolbar{
+                    display: none;
                 }
               }
               </style>
               </head>
               <body class="A4 ${configuration.orientation}">
+<!--                <div class="toolbar">-->
+<!--                    ALGUMA COISA AQUI NESSA TOLBAR-->
+<!--                </div>-->
                 <section class="sheet" style="overflow: unset !important;"></section>
               </body>`;
   }
 }
+
+// https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
+// https://www.sitepoint.com/css-printer-friendly-pages/

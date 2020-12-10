@@ -10,7 +10,13 @@
       {{header.content}}
     </div>
     <div class="ngx-preview-body"
-         [style.height]="'calc( 296mm - ' + header.height + ' - ' +  margin.top + ' - ' +  margin.bottom + ' - ' +  footer.height + ')'"
+         [style]="{
+             height: 'calc( 296mm - ' + header.height + ' - ' +  margin.top + ' - ' +  margin.bottom + ' - ' +  footer.height + ' - ' +  content.padding.bottom + ' - ' +  content.padding.top + ')',
+             paddingTop: content.padding.top,
+             paddingRight: content.padding.right,
+             paddingBottom: content.padding.bottom,
+             paddingLeft: content.padding.left
+         }"
     >
       {{content.content}}
     </div>
