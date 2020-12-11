@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+.-marginless{
+  padding: 0 !important;
+}
+
 @media print {
   .-body-content{
     height: unset !important;

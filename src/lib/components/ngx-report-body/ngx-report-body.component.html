@@ -1,13 +1,13 @@
 <tbody class="ngx-dc-report-content">
   <tr>
     <td style="padding: 0;">
-      <div [style]="{
+      <div  [style]="{
              height: 'calc( 296mm - ' + ngxReportService.header.height + ' - ' + ngxReportService.footer.height + ')',
              paddingTop: padding.top,
              paddingRight: padding.right,
              paddingBottom: padding.bottom,
              paddingLeft: padding.left
-            }" class="-body-content" [ngClass]="{debug: ngxReportService.debug}">
+            }" class="-body-content" [ngClass]="{debug: ngxReportService.debug, '-marginless': marginless}">
         <ng-content></ng-content>
       </div>
     </td>
