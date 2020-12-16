@@ -331,10 +331,10 @@ export class NgxReportService {
 
               /** For print **/
               @page {
-                margin-top: ${!configuration.marginless ? configuration.margin.top : '0mm'};
-                margin-right: ${!configuration.marginless ? configuration.margin.right : '0mm'};
-                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '0mm'};
-                margin-left: ${!configuration.marginless ? configuration.margin.left : '0mm'};
+                margin-top: ${!configuration.marginless ? configuration.margin.top : '5mm'};
+                margin-right: ${!configuration.marginless ? configuration.margin.right : '5mm'};
+                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '5mm'};
+                margin-left: ${!configuration.marginless ? configuration.margin.left : '5mm'};
                 size: A4 ${configuration.orientation};
                 page-break-before: always;
 
