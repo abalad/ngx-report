@@ -300,6 +300,12 @@ export class NgxReportService {
   }
 
   private getBodyContent( configuration: ReportServiceConfig ) {
+    const marginTop = !configuration.marginless ? configuration.margin.top : '5mm';
+    const marginBottom = !configuration.marginless ? configuration.margin.bottom : '5mm';
+    const marginRight = !configuration.marginless ? configuration.margin.right : '5mm';
+    const marginLeft = !configuration.marginless ? configuration.margin.left : '5mm';
+    const height = 'calc( 296mm - ' + marginTop + ' - ' + marginBottom + ')';
+
     return `<html lang="pt">
               <head>
               <meta charset="utf-8">
@@ -331,13 +337,12 @@ export class NgxReportService {
 
               /** For print **/
               @page {
-                margin-top: ${!configuration.marginless ? configuration.margin.top : '5mm'};
-                margin-right: ${!configuration.marginless ? configuration.margin.right : '5mm'};
-                margin-bottom: ${!configuration.marginless ? configuration.margin.bottom : '5mm'};
-                margin-left: ${!configuration.marginless ? configuration.margin.left : '5mm'};
+                margin-top: ${marginTop};
+                margin-right: ${marginRight};
+                margin-bottom: ${marginBottom};
+                margin-left: ${marginLeft};
                 size: A4 ${configuration.orientation};
                 page-break-before: always;
-
               }
 
               /** For screen preview **/
@@ -353,8 +358,9 @@ export class NgxReportService {
 
               /** Fix for Chrome issue #273306 **/
               @media print {
-                body.A4.landscape { width: 297mm }
+                body.A4.landscape { width: 297mm  }
                 body.A4.portrait { width: 210mm }
+                body.A4.portrait .sheet { width: 210mm; height: ${height} }
                 body{
                   background: #FFFFFF !important;
                 }
