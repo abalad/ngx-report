@@ -5,7 +5,7 @@ import {
   Injector, Optional,
   Type,
 } from '@angular/core';
-import { ReportServiceConfig } from '../classes/report-service-config';
+import { ImpressionType, ReportServiceConfig } from '../classes/report-service-config';
 
 @Injectable({
   providedIn: 'root'
@@ -68,12 +68,15 @@ export class NgxReportService {
   public footer = { height: '30mm' };
 
   /* Content Default Properties */
-  public body = { padding: {top: '0mm', right: '0mm', bottom: '0mm', left: '0mm'} };
+  public body = { padding: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' } };
 
   /**
    * Default Orientation Configurations
    */
   public orientation: 'portrait' | 'landscape' = 'portrait';
+
+  /* Default Impression Type */
+  impressionType = ImpressionType.DefaultA4;
 
   /**
    * Class used in component when printing to current window
@@ -94,8 +97,8 @@ export class NgxReportService {
     @Optional() config: ReportServiceConfig,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private appRef: ApplicationRef ) {
-      this.setRootConfigOptions(config);
+    private appRef: ApplicationRef) {
+    this.setRootConfigOptions(config);
   }
 
   /**
@@ -106,10 +109,12 @@ export class NgxReportService {
    * @param properties
    * @param configuration
    */
-  printComponent(component: Type<any>, properties, configuration = this.getDefaultConfiguration() ) {
+  printComponent(component: Type<any>, properties, configuration?: ReportServiceConfig) {
+    if (!configuration) {
+      configuration = this.getDefaultConfiguration();
+    }
     this.freezeConfiguration();
     this.setRootConfigOptions(configuration);
-    configuration = this.getDefaultConfiguration();
     const componentRef = this.createComponent(component, properties, configuration);
     this.print(componentRef.location.nativeElement, this.printOpenWindow, configuration);
     this.unFreezeConfiguration();
@@ -170,6 +175,9 @@ export class NgxReportService {
       if (configuration.hasOwnProperty('marginless')) {
         this.marginless = configuration.marginless;
       }
+      if (configuration.hasOwnProperty('impressionType')) {
+        this.impressionType = configuration.impressionType;
+      }
     }
   }
 
@@ -191,6 +199,7 @@ export class NgxReportService {
       body: this.body,
       orientation: this.orientation,
       marginless: this.marginless,
+      impressionType: this.impressionType
     };
   }
 
@@ -226,12 +235,12 @@ export class NgxReportService {
   private printInNewWindow(content: HTMLElement, configuration: ReportServiceConfig): void {
     this.window = null;
     this.window = window.open('', 'target', 'toolbar=0,height=600,width=1024');
-    this.window.document.write( this.getBodyContent( configuration ) );
+    this.window.document.write(this.getBodyContent(configuration));
     this.window.document.body.querySelector('section').appendChild(content);
     document.querySelectorAll('style').forEach(htmlElement => {
       this.window.document.head.appendChild(htmlElement.cloneNode(true));
     });
-    this.window.document.head.appendChild( this.getStyleSheetElement() );
+    this.window.document.head.appendChild(this.getStyleSheetElement());
     this.window.document.close();
     setTimeout(
       () => this.printTabWindow(this.window, this.window.document),
@@ -264,7 +273,7 @@ export class NgxReportService {
       return;
     }
     printWindow.addEventListener('afterprint', () => {
-      this.eventadded[ printWindow.name ] = !printWithOpenInNewWindow;
+      this.eventadded[printWindow.name] = !printWithOpenInNewWindow;
       this.cleanUp(printWindow, printWithOpenInNewWindow);
     });
   }
@@ -282,8 +291,8 @@ export class NgxReportService {
     }
   }
 
-  private createComponent( component, properties, configuration ) {
-    const factory = this.resolver.resolveComponentFactory( component );
+  private createComponent(component, properties, configuration) {
+    const factory = this.resolver.resolveComponentFactory(component);
     const componentRef = factory.create(this.injector);
     this.appRef.attachView(componentRef.hostView);
     componentRef.instance['properties'] = properties;
@@ -296,10 +305,62 @@ export class NgxReportService {
   }
 
   private unFreezeConfiguration() {
-    this.setRootConfigOptions( this.freezedConfiguration );
+    this.setRootConfigOptions(this.freezedConfiguration);
   }
 
-  private getBodyContent( configuration: ReportServiceConfig ) {
+  private getBodyContent(configuration: ReportServiceConfig): string | null {
+    if (configuration.impressionType !== ImpressionType.DefaultA4) {
+      const marginTop = !configuration.marginless ? configuration.margin.top : '0mm';
+      const marginBottom = !configuration.marginless ? configuration.margin.bottom : '0mm';
+      const marginRight = !configuration.marginless ? configuration.margin.right : '5mm';
+      const marginLeft = !configuration.marginless ? configuration.margin.left : '5mm';
+
+      return `<html lang="pt">
+              <head>
+              <meta charset="utf-8">
+              <title>${configuration.title}</title>
+               <!-- Normalize or reset CSS with your favorite library -->
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+              <style>
+              .toolbar{
+                background-color: #FFF;
+                box-shadow: 0 0.5mm 2mm rgba(0,0,0,.3);
+                position: fixed;
+                top: 0;
+                height: 75px;
+                width: 100%;
+                z-index: 1;
+              }
+              .sheet {
+                margin: 0;
+                overflow: hidden;
+                position: relative;
+                box-sizing: border-box;
+                page-break-after: always;
+              }
+
+
+              /** For screen preview **/
+              @media screen {
+                body { background: #e0e0e0 }
+                .sheet {
+                  background: white;
+                  box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
+                  margin: 5mm auto;
+                  /*margin-top: 100px;*/
+                }
+              }
+
+              </style>
+              </head>
+              <body class="A4 ${configuration.orientation}">
+<!--                <div class="toolbar">-->
+<!--                    ALGUMA COISA AQUI NESSA TOLBAR-->
+<!--                </div>-->
+                <section class="sheet" style="overflow: unset !important;"></section>
+              </body>`;
+    }
+
     const marginTop = !configuration.marginless ? configuration.margin.top : '5mm';
     const marginBottom = !configuration.marginless ? configuration.margin.bottom : '5mm';
     const marginRight = !configuration.marginless ? configuration.margin.right : '5mm';

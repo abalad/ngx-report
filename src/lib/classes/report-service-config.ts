@@ -1,4 +1,11 @@
 /**
+ * Enum for Impression Type
+ */
+export enum ImpressionType {
+  DefaultA4 = 'DefaultA4',
+  CustomPrinter = 'CustomPrinter'
+}
+/**
  * Config for service - used in forRoot
  */
 export class ReportServiceConfig {
@@ -37,6 +44,9 @@ export class ReportServiceConfig {
 
   /* Content Default Properties */
   body ? = { padding: {top: '0mm', right: '0mm', bottom: '0mm', left: '0mm'} };
+
+  /* Default Impression Type */
+  impressionType ?: ImpressionType = ImpressionType.DefaultA4;
 
   /* Print Without Margin */
   marginless ? = false;

@@ -18,10 +18,13 @@ export class NgxReportBodyComponent implements OnInit {
 
   public footer: any;
 
+  public impressionType: any
+
   constructor( public ngxReportService: NgxReportService ) {
     this.margin = this.ngxReportService.margin;
     this.padding = this.ngxReportService.body.padding;
     this.marginless = this.ngxReportService.marginless;
+    this.impressionType = this.ngxReportService.impressionType;
     this.header = this.ngxReportService.header;
     this.footer = this.ngxReportService.footer;
   }
