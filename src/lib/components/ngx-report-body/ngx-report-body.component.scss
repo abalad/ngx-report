@@ -24,6 +24,11 @@
   padding: 10px !important;
 }
 
+.no-margin {
+  padding: 0px !important;
+}
+
+
 @media print {
   .-body-content{
     height: unset !important;

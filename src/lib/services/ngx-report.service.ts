@@ -312,8 +312,8 @@ export class NgxReportService {
     if (configuration.impressionType !== ImpressionType.DefaultA4) {
       const marginTop = !configuration.marginless ? configuration.margin.top : '0mm';
       const marginBottom = !configuration.marginless ? configuration.margin.bottom : '0mm';
-      const marginRight = !configuration.marginless ? configuration.margin.right : '5mm';
-      const marginLeft = !configuration.marginless ? configuration.margin.left : '5mm';
+      const marginRight = !configuration.marginless ? configuration.margin.right : '0mm';
+      const marginLeft = !configuration.marginless ? configuration.margin.left : '0mm';
 
       return `<html lang="pt">
               <head>
