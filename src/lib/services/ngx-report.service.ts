@@ -242,6 +242,18 @@ export class NgxReportService {
     });
     this.window.document.head.appendChild(this.getStyleSheetElement());
     this.window.document.close();
+    const sheets = this.window.document.querySelectorAll('.sheet');
+    if (sheets.length > 0) {
+      const lastSheet = sheets[sheets.length - 1] as HTMLElement;
+      lastSheet.style.setProperty('page-break-after', 'auto', 'important');
+      lastSheet.style.setProperty('break-after', 'auto', 'important');
+
+      const lastTable = lastSheet.querySelector('.ngx-dc-report-container') as HTMLElement | null;
+      if (lastTable) {
+        lastTable.style.setProperty('page-break-after', 'auto', 'important');
+        lastTable.style.setProperty('break-after', 'auto', 'important');
+      }
+    }
     setTimeout(
       () => this.printTabWindow(this.window, this.window.document),
       this.timeToWaitRender
@@ -393,8 +405,10 @@ export class NgxReportService {
 
               /** Body sizes **/
               body { margin: 0; background: #e0e0e0 !important;  }
-              body.A4.portrait .sheet { width: 210mm; height: 296mm }
-              body.A4.landscape .sheet { width: 297mm; height: 209mm }
+              @media screen {
+                body.A4.portrait .sheet { width: 210mm; height: 296mm }
+                body.A4.landscape .sheet { width: 297mm; height: 209mm }
+              }
 
               /** For print **/
               @page {
